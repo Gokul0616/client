@@ -1,0 +1,46 @@
+.landing-page-container {
+  height: 703px;
+  width: 100%;
+  background-color: rgb(37, 7, 137);
+}
+
+.landing-page-details-container {
+  height: 91%;
+  padding: 0 100px 0 100px;
+  display: flex;
+}
+
+.landing-page-details-img,
+.landing-page-details {
+  width: 50%;
+}
+.landing-page-details-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.landing-page-details-heading-name1 {
+  color: #fff;
+  font-size: 35px;
+}
+.landing-page-details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.landing-page-details-heading-name2 {
+  color: #fff;
+  font-size: 20px;
+  padding: 15px 0;
+}
+.landing-page-signup-button {
+  height: 40px;
+  width: 100px;
+  border-radius: 20px;
+  font-size: 15px;border: none;
+ font-weight: bold;
+}
+
+.landing-page-signup-button:hover{
+    background-color:  rgb(57, 3, 232);border: none;color: #fff;
+}

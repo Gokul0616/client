@@ -1,0 +1,259 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+.user-container {
+  width: 25%;
+  height: 703px;
+}
+.separator {
+  margin: 0; /* Remove default margin */
+  border: 1px solid #e5e7eb; /* Remove default border */
+}
+.App {
+  display: flex;
+}
+
+.user-heading-container {
+  height: 60px;
+  /* background-color: red; */
+  font-size: 20px;
+  font-weight: 600;
+  align-items: center;
+  display: flex;
+  padding: 0 20px;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.settings-icon {
+  width: 24px;
+  height: 24px;
+}
+.user-heading-container {
+  position: relative;
+}
+.user-message-details {
+  height: 550px;
+  overflow-y: auto;
+}
+
+.user-message-scrollable {
+  overflow: visible;
+}
+
+/* Scrollbar Track */
+.user-message-details::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Light grey */
+}
+
+/* Scrollbar Handle */
+.user-message-details::-webkit-scrollbar-thumb {
+  background-color: #888; /* Grey */
+  border-radius: 10px; /* Rounder thumb */
+}
+
+/* Scrollbar Handle on hover */
+.user-message-details::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Darker grey */
+}
+
+/* Scrollbar Buttons (arrows) */
+.user-message-details::-webkit-scrollbar-button {
+  display: none; /* Hide scrollbar buttons */
+}
+
+/* Scrollbar corner */
+.user-message-details::-webkit-scrollbar-corner {
+  background-color: transparent; /* Transparent */
+}
+
+/* Scrollbar width and height */
+.user-message-details::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+  height: 10px; /* Height of the scrollbar */
+}
+
+.user-message-container-request {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  padding: 5px 20px;
+  color: rgb(78, 78, 171);
+}
+.user-message-search {
+  margin: 10px 0;
+  padding: 0 15px;
+  position: relative;
+}
+
+.user-message-search input[type="text"] {
+  width: calc(100% - 30px);
+  padding: 10px;
+  border: 1px solid #828384;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+
+.user-message-search input[type="text"]::placeholder {
+  color: #a0aec0;
+}
+.user-message-search .search-icon {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-message-search .search-icon img {
+  width: 20px;
+  height: 20px;
+  opacity: 0.5; /* Adjust the opacity of the search icon */
+}
+
+/* Dark mode styles */
+.dark-mode .user-container {
+  background-color: #1a202c;
+  color: #cbd5e0;
+}
+
+.dark-mode .separator {
+  border-color: #2d3748;
+}
+
+.dark-mode .user-heading-container {
+  border-color: #2d3748;
+}
+
+.dark-mode .user-message-details {
+  background-color: #2d3748;
+}
+
+.dark-mode .user-message-container-request {
+  color: #a0aec0;
+}
+
+.dark-mode .user-message-search input[type="text"] {
+  background-color: #2d3748;
+  border-color: #4a5568;
+  color: #cbd5e0;
+}
+
+.dark-mode .user-message-search input[type="text"]::placeholder {
+  color: #828a99;
+}
+
+.dark-mode .user-message-details::-webkit-scrollbar-thumb {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+}
+.dark-mode .user-message-details::-webkit-scrollbar-track {
+  background-color: #888;
+}
+.dark-mode .user-message-details::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Darker grey */
+}
+
+.dark-mode .user-message-newmessage-username {
+  color: #cbd5e0;
+}
+.dark-mode .user-message-newmessage-messages {
+  color: #a1a4a6;
+}
+
+/* Add new styles for popup */
+.popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+.popup-content {
+  background-color: #ffffff; /* White background */
+  border-radius: 5px;
+  padding: 20px;
+  min-height: fit-content;
+  max-height: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow */
+}
+
+.popup-close-button-requests {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #333333;
+}
+
+/* Dark mode styles for popup */
+.dark-mode .popup-content {
+  background-color: #2d3748; /* Dark background */
+  color: #cbd5e0; /* Light text color */
+}
+
+.dark-mode .popup-close-button-requests {
+  color: #cbd5e0; /* Light close button color */
+}
+.user-message-requests-heading {
+  font-size: 17px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+}
+.user-message-requests-messages {
+  margin-top: 5px;
+  border: 1px solid #9e9c9c;
+  border-radius: 10px;
+  overflow-y: auto;
+}
+.scrollbar-style {
+  overflow-y: auto;
+  max-height: 300px; /* Adjust as needed */
+}
+
+.user-message-requests-messages::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+  height: 10px; /* Height of the scrollbar */
+}
+
+.user-message-requests-messages::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Light grey */
+}
+
+.user-message-requests-messages::-webkit-scrollbar-thumb {
+  background-color: #888; /* Grey */
+  border-radius: 10px; /* Rounder thumb */
+}
+
+.user-message-requests-messages::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Darker grey */
+}
+
+.user-message-requests-messages .dark-mode::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+  height: 10px; /* Height of the scrollbar */
+}
+
+.user-message-requests-messages .dark-mode::-webkit-scrollbar-track {
+  background-color: #888; /* Dark grey */
+}
+
+.user-message-requests-messages .dark-mode::-webkit-scrollbar-thumb {
+  background-color: #cbd5e0; /* Light grey */
+  border-radius: 10px; /* Rounder thumb */
+}
+
+.user-message-requests-messages .dark-mode::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Darker grey */
+}

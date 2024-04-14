@@ -1,0 +1,241 @@
+.account-container {
+  width: 25%;
+  height: 703px;
+}
+.accountinfo-container {
+  padding: 15px 10px;
+}
+.user-heading-container {
+  height: 60px;
+}
+
+.account-user-img {
+  height: 60px;
+  width: 60px;
+  border-radius: 100px;
+}
+.accountinfo-user-image {
+  display: flex;
+}
+.accountinfo-user-details {
+  /* display: grid; */
+  width: 100%;
+  align-items: left;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+.padding-10 {
+  padding: 0 10px 0 10px;
+}
+
+.accountinfo-user-name {
+  color: #000000;
+  font-size: 18px;
+  font-weight: 600;
+}
+.accountinfo-user-mail {
+  color: #4b5563;
+  font-size: 14px;
+}
+.accountinfo-edit-button {
+  background-color: #3b82f6;
+  height: 40px;
+  width: 100%;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 600;
+}
+.accountinfo-edit-button:hover {
+  background-color: #1d6ff3;
+  box-shadow: inset 0 -4px 0 #1d4ed8;
+}
+.accountinfo-edit-button-container {
+  margin-top: 20px;
+}
+
+.popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  width: 50%;
+  max-width: 400px; /* Adjust max-width as needed */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content select {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #cccccc;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.popup-close-button {
+  position: relative;
+  left: 95%;
+  bottom: 25px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #000000;
+  z-index: 1;
+}
+
+.popup-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-content input {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+}
+.popup-content textarea {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+}
+.popup-content button[type="submit"] {
+  background-color: #3b82f6;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.popup-content button[type="submit"]:hover {
+  background-color: #1d6ff3;
+}
+.popup-content input[type="date"] {
+  cursor: pointer;
+}.popup-content input[type="email"] {
+  cursor: pointer;
+}
+.popup-content input[type="file"] {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #333333;
+  font-size: 15px;
+  cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
+}
+.popup-heading-edit-profile {
+  font-size: 17px;
+  font-weight: 600;
+}
+.popup-content input[type="text"] {
+  color: #000;
+}
+/* You can hide the default file input text if needed */
+.popup-content input[type="file"]::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.popup-content input[type="file"]::before {
+  content: "Choose File";
+  display: inline-block;
+  background-color: #3b82f6;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.popup-content input[type="file"]:hover::before {
+  background-color: #1d6ff3;
+}
+.user-settings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dark-mode .account-container {
+  background-color: #1a202c;
+  color: #cbd5e0;
+}
+
+.dark-mode .account-header {
+  border-color: #2d3748;
+}
+
+.dark-mode .account-details {
+  background-color: #2d3748;
+}
+
+.dark-mode .account-details-item {
+  color: #cbd5e0;
+}
+.dark-mode .accountinfo-user-name {
+  color: #cbd5e0;
+}
+.dark-mode .accountinfo-user-mail {
+  color: #a1a4a6;
+}
+.dark-mode .popup-heading-edit-profile {
+  color: #fff;
+}
+.dark-mode .popup-content {
+  background-color: #1a202c;
+}
+.dark-mode .popup-close-button {
+  color: #fff;
+}
+.dark-mode .popup-content input[type="email"]::placeholder {
+  color: #fff;
+}
+.dark-mode .popup-content input[type="file"] {
+  margin-bottom: 10px;
+  background-color: #2d3748;
+  color: #fff;
+}
+
+.dark-mode .popup-content input {
+  background-color: #2d3748;
+}
+.dark-mode .popup-content textarea {
+  background-color: #2d3748;
+}
+.dark-mode .popup-content select {
+  background-color: #2d3748;
+  color: #fff;
+}
+.dark-mode .popup-content input::placeholder {
+  color: #fff;
+}
+.dark-mode .popup-content textarea::placeholder {
+  color: #fff;
+}
+.dark-mode .popup-content input[type="date"] {
+  color: #fff;
+}
+.dark-mode .popup-content input[type="text"] {
+  color: #fff;
+}
+.dark-mode .popup-content input[type="tel"] {
+  color: #fff;
+}
+.dark-mode .popup-content textarea {
+  color: #fff;
+}

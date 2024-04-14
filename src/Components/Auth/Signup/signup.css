@@ -1,0 +1,128 @@
+.signup-container-main {
+  background-color: rgb(37, 7, 137);
+  height: 703px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.signup-container {
+  height: 500px;
+  width: 900px;
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 0;
+  display: flex;
+}
+.signup-form-container,
+.signup-image-container {
+  width: 50%;
+}
+
+.signup-form-container {
+  border-radius: 0 10px 10px 0;
+  border-left: 1px solid #ccc;
+}
+.signup-image-container {
+  border-radius: 10px 0 0 10px;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  padding: 10px;
+}
+.signup-image-logo-text{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: fit-content;
+  width: 90px;
+  font-size: 20px;
+  font-weight: 600;
+}
+.signup-image-logo{
+   height: 60px;
+  padding: 15px 0 0 15px;
+}
+.signup-image-img{
+ display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.signup-image-text{
+    font-size: 20px;
+  padding: 20px 0;
+  font-weight: 500;
+  text-align: center;
+}
+.signup-form-heading{
+    font-size: 25px;
+  font-weight: 500;
+  padding: 25px 0 0 20px;
+}
+.signup-form-input-label{
+  width: fit-content;
+}
+.signupform-input-name{
+  width: 50%;
+}
+.signup-form-input-container{
+  display: flex;
+}
+.signupform-input-email{
+  width: 100%;
+}
+.signup-form-input-label{
+  font-size: 17px;
+  margin-top: 15px;
+  font-weight: 500;
+  padding: 0 0 0 5px;
+}
+.signup-form-input{
+  width: calc(100% - 30px);
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid #828384;
+  border-radius: 5px;
+  font-size: 15px;
+  outline: none;
+  margin: 15px 0 0 0;
+}
+.signup-form{
+  padding: 15px;
+}
+.signup-form-button:hover {
+  background-color: #1d6ff3;
+  box-shadow: inset 0 -4px 0 #1d4ed8;
+}
+.signup-form-button {
+  height: 43px;
+  width: 50%;
+  border: none;
+  border-radius: 50px;
+  font-size: 18px;
+  background-color: #3b82f6;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+.signup-form-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0 0 0;
+}
+.signup-form-footer-text{
+ padding: 5px 0 0 15px;
+  font-size: 15px;
+}
+.eye{
+  position: relative;
+  left: 80%;
+  bottom: 30px;
+}
+.error-confirm-password,
+.error-password{
+  position: relative;
+  bottom: 25px;
+}
+.signupform-input-password{height: 100px;}

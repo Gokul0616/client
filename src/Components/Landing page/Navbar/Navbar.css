@@ -1,0 +1,30 @@
+.landing-page-navbar-heading {
+  width: 1535px;
+  height: fit-content;
+  padding: 15px 0 15px 0;
+}
+.landing-page-navbar-heading-logo {
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.landing-page-navbar-heading-container {
+  padding: 0 100px 0 100px;
+  display: flex;
+  justify-content: space-between;
+}
+.landing-page-navbar-heading-logo-text {
+  color: #fff;
+  margin-left: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.landing-page-navbar-heading-signin {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}

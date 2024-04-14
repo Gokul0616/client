@@ -1,0 +1,76 @@
+.user-new-messages {
+  border-bottom: 1px solid #e5e7eb;
+  height: 50px;
+  padding: 7px 10px 2px 2px;
+  display: flex;
+}
+.dark-mode .user-new-messages {
+  border-bottom: 1px solid #4b4a4a;
+}
+.user-message-img-container {
+  width: 50px;
+  margin-left: 10px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+.user-message-img {
+  border-radius: 50px;
+}
+.user-message-userName-container {
+  width: 75%;
+  padding: 6px 0px 10px 10px;
+  justify-content: space-between;
+}
+.user-new-messages:hover {
+  background-color: #e5e7eb;
+}
+.user-message-newmessage-username {
+  width: fit-content;
+  font-size: 18px;
+  color: #000000;
+  font-weight: 600;
+}
+.user-message-newmessage-messages {
+  width: 95%;
+  color: transparent;
+  font-size: 14px;
+  background: linear-gradient(
+    90deg,
+    #000 0%,
+    #000 80%,
+    #fffcfc 100%
+  );
+  background-clip: text; /* Clip text according to background */
+  -webkit-background-clip: text; /* For Safari */
+  -webkit-text-fill-color: transparent; /* Hide text color (only show gradient) */
+}
+.user-message-newmessage-count {
+  height: 20px;
+  width: 20px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin-top: 25px;
+  margin-left: 10px;
+  border-radius: 10px;
+  color: white;
+  background-color: rgb(126, 121, 121);
+}
+.pointer {
+  cursor: pointer;
+}
+.dark-mode .user-message-newmessage-messages {
+  background: linear-gradient(
+    90deg,
+    #fff 0%,
+    #fff 80%,
+    #535353 100%
+  );
+  background-clip: text; /* Clip text according to background */
+  -webkit-background-clip: text; /* For Safari */
+  -webkit-text-fill-color: transparent; /* Hide text color (only show gradient) */
+}
+.dark-mode .user-new-messages:hover {
+  background-color: #2c2c2c;
+}

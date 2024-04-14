@@ -1,0 +1,29 @@
+.user-message-requested-container{
+    padding: 10px;
+}
+.user-message-requested-main{
+    height: 60px;
+    display: flex;
+    align-self: center;
+    justify-content: space-between;
+    border-radius: 5px;
+border: 1px solid #535353;
+}
+.user-message-requested-buttons,
+.user-message-requested-username,
+.user-message-requested-user-img{
+    display: flex;
+    align-items: center;justify-content: center;
+}
+.user-message-requested-username{
+    padding: 15px;
+}
+.user-message-requested-userinfo{
+    display:flex
+}
+.user-message-requested-buttons{
+    padding: 15px;
+}
+.user-message-requested-img-buttons{
+    margin-right: 10px;
+}

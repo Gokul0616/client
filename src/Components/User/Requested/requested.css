@@ -1,0 +1,12 @@
+.user-message-requested-button-cancel {
+  background-color: #3b82f6;
+  border: none;
+  color: #fff;cursor: pointer;
+  border-radius: 10px;
+  height: 30px;
+  transition: 0.3s ease;
+}
+.user-message-requested-button-cancel:hover {
+  background-color: #b7b6b6;
+  border: none;
+}

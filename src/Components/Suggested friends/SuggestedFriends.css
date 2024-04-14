@@ -1,0 +1,150 @@
+.suggested-friends-container {
+  padding: 0 10px 10px 10px;
+  overflow-y: auto;
+  height: 445px;
+}
+
+.suggested-friends-heading {
+  font-size: 20px;
+  font-weight: 500;
+  padding: 0 0 0 10px;
+}
+.suggested-friends-friends-container {
+  margin-top: 10px;
+  display: flex;
+  height: 65px;
+}
+.suggested-friends-friends-username-container {
+  width: 100%;
+  display: flex;
+}
+.suggested-friends-friends-username {
+  width: 80%;
+  align-items: left;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+.suggested-friends-friends-username-name,
+.suggested-friends-friends-username-bio {
+  height: fit-content;
+  width: 90%;
+  padding: 0 0 0 10px;
+}
+.suggested-friends-friends-username-bio {
+  color: transparent; /* Hide the text */
+  font-size: 14px;
+  background: linear-gradient(90deg, #000 0%, #000 80%, #fffcfc 100%);
+  background-clip: text; /* Clip text according to background */
+  -webkit-background-clip: text; /* For Safari */
+  -webkit-text-fill-color: transparent; /* Hide text color (only show gradient) */
+}
+
+.suggested-friends-friends-username-name {
+  color: #000000;
+  font-size: 18px;
+  font-weight: 600;
+}
+.suggested-friends-friends-add {
+  width: 20%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+.suggested-friends-add-group-img {
+  cursor: pointer;
+}
+.show-more-button {
+  margin: 10px 0 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #3b82f6;
+}
+
+/* Scrollbar Track */
+.suggested-friends-container::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Light grey */
+}
+
+/* Scrollbar Handle */
+.suggested-friends-container::-webkit-scrollbar-thumb {
+  background-color: #888; /* Grey */
+  border-radius: 10px; /* Rounder thumb */
+}
+
+/* Scrollbar Handle on hover */
+.suggested-friends-container::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Darker grey */
+}
+
+/* Scrollbar Buttons (arrows) */
+.suggested-friends-container::-webkit-scrollbar-button {
+  display: none; /* Hide scrollbar buttons */
+}
+
+/* Scrollbar corner */
+.suggested-friends-container::-webkit-scrollbar-corner {
+  background-color: transparent; /* Transparent */
+}
+
+/* Scrollbar width and height */
+.suggested-friends-container::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+  height: 10px; /* Height of the scrollbar */
+}
+
+.desktop-message {
+  display: none; /* Initially hidden */
+  text-align: center;
+  font-size: 18px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+@media screen and (max-width: 600px) {
+  .desktop-message {
+    display: block; /* Displayed on smaller screens */
+    position: relative;
+    top: 300px;
+  }
+}
+
+.dark-mode .suggested-friend-container {
+  background-color: #1a202c;
+  color: #cbd5e0;
+}
+
+.dark-mode .suggested-friend-header {
+  border-color: #2d3748;
+}
+
+.dark-mode .suggested-friend-details {
+  background-color: #2d3748;
+}
+
+.dark-mode .suggested-friend-item {
+  color: #cbd5e0;
+}
+.dark-mode .suggested-friends-friends-username-name {
+  color: #cbd5e0;
+}
+.dark-mode .suggested-friends-friends-username-bio {
+  background: linear-gradient(90deg, #fff 0%, #fff 80%, #535353 100%);
+  background-clip: text; /* Clip text according to background */
+  -webkit-background-clip: text; /* For Safari */
+  -webkit-text-fill-color: transparent; /* Hide text color (only show gradient) */
+}
+.dark-mode .suggested-friends-container::-webkit-scrollbar-thumb {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+}
+.dark-mode .suggested-friends-container::-webkit-scrollbar-track {
+  background-color: #888;
+}
+.dark-mode .suggested-friends-container::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Darker grey */
+}
