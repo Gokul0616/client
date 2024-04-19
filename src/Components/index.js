@@ -5,7 +5,7 @@ import Message from "./Message/message";
 import { ToastContainer } from "react-toastify";
 import Account from "./Account/account";
 const Chat = ({ isDarkMode, toggleDarkMode }) => {
-  const { userId } = useParams();
+  const { userId, currUserId } = useParams();
 
   return (
     <>
@@ -15,7 +15,7 @@ const Chat = ({ isDarkMode, toggleDarkMode }) => {
         userId={userId}
       />
       <hr className="separator" />
-      <Message isDarkMode={isDarkMode} userId={userId} />
+      <Message isDarkMode={isDarkMode} userId={userId} currUser={currUserId} />
       <hr className="separator" />
       <ToastContainer />
       <Account isDarkMode={isDarkMode} userId={userId} />

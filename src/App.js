@@ -55,6 +55,12 @@ function App() {
               element={
                 <Chat isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
               }
+            />{" "}
+            <Route
+              path="/chat/:userId/:currUserId"
+              element={
+                <Chat isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+              }
             />
             <Route path="/" element={<LandingPage />} />
             <Route path="/signin" element={<Signin />} />

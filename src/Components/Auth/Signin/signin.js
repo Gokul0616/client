@@ -9,6 +9,7 @@ import Show from "../assets/show.png";
 
 const Signin = () => {
   const [signupError, setSignupError] = useState("");
+  const [loading, setLoading] = useState();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -54,14 +55,28 @@ const Signin = () => {
   };
 
   // Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid = validateForm();
     if (isValid) {
-      // Form submission logic
-      // console.log("Form is valid. Submitting...");
-      backendApi(formData);
-      // console.log("Form data:", formData);
+      setLoading(true); // Set loading to true before making the API call
+      try {
+        const result = await axios.post(
+          `${process.env.REACT_APP_SERVER_PORT}/api/signin`,
+          formData
+        );
+        if (result.data.error) {
+          setSignupError(result.data.error);
+        } else if (result.data.result === "Successful") {
+          setSignupError("");
+          const userId = result.data.userData.id;
+          navigate(`/chat/${userId}`);
+        }
+      } catch (error) {
+        console.error("Error sending data to backend:", error);
+      } finally {
+        setLoading(false); // Set loading back to false after receiving the response
+      }
     } else {
       console.log("Form is invalid. Please fix errors.");
     }
@@ -74,6 +89,7 @@ const Signin = () => {
         `${process.env.REACT_APP_SERVER_PORT}/api/signin`,
         formData
       );
+      // setLoading(true);
       // console.log(result);
       if (result.data.error) {
         setSignupError(result.data.error);
@@ -154,7 +170,7 @@ const Signin = () => {
             </div>
             <div className="signin-form-button-container">
               <button type="submit" className="signin-form-button">
-                Signin
+                {loading ? "Loading..." : "Signin"}
               </button>
             </div>
             <div className="signin-form-footer">

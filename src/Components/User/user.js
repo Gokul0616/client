@@ -16,6 +16,7 @@ const User = ({ userId, isDarkMode, toggleDarkMode }) => {
   const [showRequestsPopup, setShowRequestsPopup] = useState(false);
   const [requestedUsers, setRequestedUsers] = useState([]);
   const [requestsUsers, setRequestsUsers] = useState([]);
+  const [userNewMessage, setUserNewMessage] = useState([]);
   const count = 0;
 
   useEffect(() => {
@@ -36,6 +37,12 @@ const User = ({ userId, isDarkMode, toggleDarkMode }) => {
           `${process.env.REACT_APP_SERVER_PORT}/api/requests/${userId}`
         );
         setRequestsUsers(requestsuser.data);
+        const userMessage = await axios.get(
+          `${process.env.REACT_APP_SERVER_PORT}/api/usermessages/${userId}`
+        );
+        const messages = userMessage.data;
+        setUserNewMessage(messages);
+        // console.log(messages);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -54,7 +61,7 @@ const User = ({ userId, isDarkMode, toggleDarkMode }) => {
   const handleRequestsClick = () => {
     setShowRequestsPopup(true);
   };
-  // console.log(userId);
+  // console.log(userNewMessage);
   return (
     <div
       className={
@@ -187,33 +194,14 @@ const User = ({ userId, isDarkMode, toggleDarkMode }) => {
 
       <div className="user-message-details">
         <div className="user-message-scrollable">
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
-          <UserMessages isDarkMode={isDarkMode} />
+          {userNewMessage.map((message) => (
+            <UserMessages
+              currUser={userId}
+              key={message}
+              userId={message}
+              IsDarkmode={isDarkMode}
+            />
+          ))}
           {/* Render more UserMessages components as needed */}
         </div>
       </div>

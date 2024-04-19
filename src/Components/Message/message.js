@@ -1,18 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./message.css";
 import OptionsIcon from "./Assets/more.png";
 import OptionsIcon2 from "./Assets/more2.png";
+import axios from "axios";
 
-function Message({ isDarkMode }) {
+function Message({ userId, currUser, isDarkMode }) {
+  const [messageUserDetails, setMessageUserDetails] = useState([]);
+  const [userInput, setUserInput] = useState("");
+  // console.log(userId, currUser);
   const [contextMenuPosition, setContextMenuPosition] = useState({
     x: 0,
     y: 0,
   });
   const [showContextMenu, setShowContextMenu] = useState(false);
   const Name = "{Name}";
+  useEffect(() => {
+    // console.log("fetched");
+    const fetchData = async () => {
+      const res = await axios.get(
+        `${process.env.REACT_APP_SERVER_PORT}/api/user/${currUser}`
+      );
+      // console.log( res.data );
+      setMessageUserDetails(res.data);
+    };
+    fetchData();
+  }, [userId, currUser]);
 
-  const handleClick = () => {
-    console.log("clicked");
+  const handleChange = (event) => {
+    setUserInput(event.target.value); // Update user input state
+  };
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent form submission
+
+    // Check if userInput is not empty
+    if (userInput.trim() !== "") {
+      console.log("User Input:", userInput); // Log user input
+      const result = await axios.post(
+        `${process.env.REACT_APP_SERVER_PORT}/api/message/${userId}/${currUser}`,
+        {
+          message: userInput,
+        }
+      );
+      console.log(result);
+      setUserInput(""); // Clear input field
+    } else {
+      // Handle case where userInput is empty
+      console.log("User input is empty");
+    }
   };
 
   const data = [
@@ -35,20 +69,24 @@ function Message({ isDarkMode }) {
     setContextMenuPosition({ x: posX, y: posY });
     setShowContextMenu(true);
   };
+  const handleClick = () => {
+    console.log("clicked");
+  };
 
   // Event handler for hiding the context menu
   const hideContextMenu = () => {
     setShowContextMenu(false);
   };
-  const bio = "This is your bio messages";
-  const truncatedMessage = bio.slice(0, 63).trim();
 
   return (
     <div className="message-container">
       <div className="user-heading-container">
         <div className="user-heading-bio">
-          <div className="user-heading-bio-name">{Name}</div>
-          <div className="user-heading-bio-text">{truncatedMessage}</div>
+          <div className="user-heading-bio-name">
+            {messageUserDetails.firstname}
+            {messageUserDetails.lastname}
+          </div>
+          <div className="user-heading-bio-text">{messageUserDetails.bio}</div>
         </div>
         <div className="user-settings">
           <img
@@ -103,15 +141,22 @@ function Message({ isDarkMode }) {
         </div>
         {/* Input field */}
         <div className="user-message-messaging-input">
-          <div className="user-message-input-container">
-            <input
-              className="user-message-input"
-              placeholder="   Type a message..."
-            />
-            <button className="user-message-send-button" onClick={handleClick}>
-              Send
-            </button>
-          </div>
+          <form
+            className="user-message-input-container"
+            onSubmit={handleSubmit}
+          >
+            <div className="user-message-input-container">
+              <input
+                className="user-message-input"
+                placeholder="   Type a message..."
+                value={userInput} // Bind input value to state
+                onChange={handleChange} // Handle input change
+              />
+              <button type="submit" className="user-message-send-button">
+                Send
+              </button>
+            </div>
+          </form>
         </div>
       </div>
       {/* Context menu */}

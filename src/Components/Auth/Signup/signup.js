@@ -20,6 +20,7 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [signupError, setSignupError] = useState("");
+  const [loading, setLoading] = useState();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -77,13 +78,31 @@ const Signup = () => {
     setErrors(newErrors);
     return isValid;
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid = validateForm();
     if (isValid) {
-      console.log("Form is valid. Submitting...");
-      // console.log("Form data:", formData);
-      backendApi(formData);
+      setLoading(true); // Set loading to true before making the API call
+      try {
+        console.log("Form is valid. Submitting...");
+        const response = await axios.post(
+          `${process.env.REACT_APP_SERVER_PORT}/api/signup`,
+          formData
+        );
+        // Handle response if needed
+        if (response.data.error) {
+          setSignupError(response.data.error);
+        } else {
+          setSignupError("");
+          const userId = response.data.id;
+          navigate(`/chat/${userId}`);
+        }
+      } catch (error) {
+        // Handle error
+        console.error("Error sending data to backend:", error);
+      } finally {
+        setLoading(false); // Set loading back to false after receiving the response
+      }
     } else {
       console.log("Form is invalid. Please fix errors.");
     }
@@ -232,7 +251,9 @@ const Signup = () => {
               </div>
             </div>
             <div className="signup-form-button-container">
-              <button className="signup-form-button">Create New Account</button>
+              <button className="signup-form-button">
+                {loading ? "Loading..." : "SignUp"}
+              </button>
             </div>
           </form>
           <div className="signup-form-footer-text">
