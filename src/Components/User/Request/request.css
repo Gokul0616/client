@@ -27,3 +27,19 @@ border: 1px solid #535353;
 .user-message-requested-img-buttons{
     margin-right: 10px;
 }
+.user-message-requested-img{
+    height: 60px;
+    width: 60px;
+    border-radius: 100px;
+}
+.user-message-requested-accepted{
+    border: 1px solid #535353;
+    padding: 0 5px 0 5px;
+    border-radius: 10px;
+    background-color: #3b82f6;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}

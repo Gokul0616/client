@@ -3,7 +3,7 @@ import "./requested.css";
 import Noprofile from "../../Usermessages/assets/user.png";
 import axios from "axios";
 
-const Requested = ({ currUser, userId, IsDarkmode }) => {
+const Requested = ({ currUser, userId, IsDarkmode, count }) => {
   const [userDetails, setUserDetails] = useState([]);
   const [remove, setRemove] = useState("cancel request");
   useEffect(() => {

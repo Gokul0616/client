@@ -15,6 +15,7 @@ const User = ({ userId, isDarkMode, toggleDarkMode }) => {
   const [showRequestedPopup, setShowRequestedPopup] = useState(false);
   const [showRequestsPopup, setShowRequestsPopup] = useState(false);
   const [requestedUsers, setRequestedUsers] = useState([]);
+  const [requestsUsers, setRequestsUsers] = useState([]);
   const count = 0;
 
   useEffect(() => {
@@ -30,13 +31,18 @@ const User = ({ userId, isDarkMode, toggleDarkMode }) => {
         } else {
           setRequestedUsers([]);
         }
+
+        const requestsuser = await axios.get(
+          `${process.env.REACT_APP_SERVER_PORT}/api/requests/${userId}`
+        );
+        setRequestsUsers(requestsuser.data);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
     };
     fetchData();
   }, []);
-
+  // console.log(requestsUsers);
   const handleClick = () => {
     console.log("clicked");
   };
@@ -80,13 +86,13 @@ const User = ({ userId, isDarkMode, toggleDarkMode }) => {
           className="user-message-requested pointer"
           onClick={handleRequestedClick}
         >
-          Requested
+          Requested({requestedUsers.length})
         </div>{" "}
         <div
           className="user-message-requests pointer"
           onClick={handleRequestsClick}
         >
-          Requests({count})
+          Requests({requestsUsers.length})
         </div>
       </div>
       <div className="user-message-search">
@@ -102,7 +108,7 @@ const User = ({ userId, isDarkMode, toggleDarkMode }) => {
             className={isDarkMode ? "popup-content dark-mode" : "popup-content"}
           >
             <div className="user-message-requests-heading">
-              Requested{" "}
+              Requested
               <button
                 className="popup-close-button-requests"
                 onClick={() => setShowRequestedPopup(false)}
@@ -125,6 +131,7 @@ const User = ({ userId, isDarkMode, toggleDarkMode }) => {
                       userId={user}
                       currUser={userId}
                       isDarkmode={isDarkMode}
+                      count={requestedUsers.length}
                     />
                   ))}
                 </div>
@@ -151,38 +158,28 @@ const User = ({ userId, isDarkMode, toggleDarkMode }) => {
                 X
               </button>
             </div>
-            <div className="user-message-requests-messages scrollbar-style">
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
-              <Request IsDarkmode={isDarkMode} />
+            <div
+              className={
+                requestsUsers.length > 0
+                  ? "user-message-requests-messages scrollbar-style"
+                  : "user-message-requests-no-messages"
+              }
+            >
+              {requestsUsers.length > 0 ? (
+                <div>
+                  {requestsUsers.map((user) => (
+                    <Request
+                      key={user}
+                      userId={user}
+                      currUser={userId}
+                      IsDarkmode={isDarkMode}
+                      count={requestsUsers.length}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div>No requests</div>
+              )}
             </div>
           </div>
         </div>
