@@ -139,3 +139,22 @@
   position: relative;
   bottom: 20px;
 }
+
+/* Add this to your signin.css file */
+@keyframes loadingDots {
+  0% {
+    content: ".";
+  }
+  33% {
+    content: "..";
+  }
+  66% {
+    content: "...";
+  }
+}
+
+/* Add this to your signin.css file */
+.loading-dots::after {
+  content: ".";
+  animation: loadingDots 1s infinite;
+}

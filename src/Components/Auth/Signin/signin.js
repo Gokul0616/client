@@ -170,7 +170,7 @@ const Signin = () => {
             </div>
             <div className="signin-form-button-container">
               <button type="submit" className="signin-form-button">
-                {loading ? "Loading..." : "Signin"}
+                {loading ? <span className="loading-dots"></span> : "Signin"}
               </button>
             </div>
             <div className="signin-form-footer">

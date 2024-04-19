@@ -252,7 +252,7 @@ const Signup = () => {
             </div>
             <div className="signup-form-button-container">
               <button className="signup-form-button">
-                {loading ? "Loading..." : "SignUp"}
+                {loading ? <span className="loading-dots"></span> : "Signup"}
               </button>
             </div>
           </form>
