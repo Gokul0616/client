@@ -6,6 +6,7 @@ import axios from "axios";
 
 function Message({ userId, currUser, isDarkMode }) {
   const [messageUserDetails, setMessageUserDetails] = useState([]);
+  const [messageWarning, setMessageWarning] = useState("   Type a message...");
   const [userInput, setUserInput] = useState("");
   // console.log(userId, currUser);
   const [contextMenuPosition, setContextMenuPosition] = useState({
@@ -45,7 +46,7 @@ function Message({ userId, currUser, isDarkMode }) {
       setUserInput(""); // Clear input field
     } else {
       // Handle case where userInput is empty
-      console.log("User input is empty");
+      setMessageWarning("   Please enter something to send a message....");
     }
   };
 
@@ -148,7 +149,7 @@ function Message({ userId, currUser, isDarkMode }) {
             <div className="user-message-input-container">
               <input
                 className="user-message-input"
-                placeholder="   Type a message..."
+                placeholder={messageWarning}
                 value={userInput} // Bind input value to state
                 onChange={handleChange} // Handle input change
               />
