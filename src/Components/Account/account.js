@@ -6,6 +6,9 @@ import axios from "axios";
 import SuggestedFriends from "../Suggested friends/SuggestedFriends";
 import NoProfile from "../Usermessages/assets/user.png";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Account = ({ userId, isDarkMode }) => {
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
@@ -50,6 +53,7 @@ const Account = ({ userId, isDarkMode }) => {
   };
   const handleClick = () => {
     console.log("cliclked");
+    // toast("Popup closed!");
   };
   const closePopup = () => {
     setIsPopupOpen(false);
@@ -97,15 +101,11 @@ const Account = ({ userId, isDarkMode }) => {
         closePopup();
         setFile("");
       }
-      // console.log("File uploaded successfully:", response.data.URL);
     } catch (error) {
       console.error("Error uploading file:", error);
     }
   };
-  let genderDisplay = false;
-  const handleClickGender = () => {
-    genderDisplay = !genderDisplay;
-  };
+
   return (
     <div className="account-container">
       <div className="user-heading-container">
@@ -166,18 +166,11 @@ const Account = ({ userId, isDarkMode }) => {
                 placeholder={lastname ? lastname : "Last Name"}
               />
               <input type="email" placeholder={userEmail} disabled />
-              <select onClick={handleClickGender}>
+              <select>
                 <option value="">{gender}</option>
-                {!genderDisplay ? (
-                  <>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                  </>
-                ) : (
-                  <></>
-                )}
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
-
               <input type="date" placeholder="Date of Birth" />
               <input
                 type="tel"
@@ -189,7 +182,6 @@ const Account = ({ userId, isDarkMode }) => {
                 accept="image/*"
                 onChange={handleImageUpload}
               />
-              {/* Add more input fields for other profile data */}
               <button type="submit">Save</button>
             </form>
           </div>

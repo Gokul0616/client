@@ -4,6 +4,8 @@ import sendRequest from "../User/assets/check-mark.png";
 import sendRequest2 from "../User/assets/check-mark2.png";
 import AddGroup2 from "./assets/add-group2.png";
 import "./SuggestedFriends.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import NoProfile from "../Usermessages/assets/user.png";
 
@@ -13,6 +15,7 @@ const SuggestedFriends = ({ isDarkMode, userId }) => {
   const [suggestedFriends, setSuggestedFriends] = useState([]);
   const [showAll, setShowAll] = useState(false);
   const [requestedUsers, setRequestedUsers] = useState([]);
+  const [isRequested, setIsRequested] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +32,17 @@ const SuggestedFriends = ({ isDarkMode, userId }) => {
         // Select initial users to display
         const selectedUsers = showAll ? shuffled : shuffled.slice(0, 3);
         setSuggestedFriends(selectedUsers);
+
+        // check if request was already send
+
+        const checkReq = await axios.get(
+          `${process.env.REACT_APP_SERVER_PORT}/api/checkRequest/${userId}`
+        );
+        const receiverIds = checkReq.data.map((item) => item.receiver_id);
+        const uniqueReceiverIds = [...new Set(receiverIds)]; // Remove duplicates
+        setRequestedUsers(uniqueReceiverIds);
+
+        // console.log(receiverIds);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -63,20 +77,22 @@ const SuggestedFriends = ({ isDarkMode, userId }) => {
       `${process.env.REACT_APP_SERVER_PORT}/api/sendRequest/`,
       { senderId: currUser, receiverId: userId }
     );
-    console.log(result);
+    // console.log(result);
     setRequestedUsers((prevUsers) => [...prevUsers, userId]);
+    if (result) {
+      toast("Request send");
+    }
   };
   const isUserRequested = (userId) => {
     return requestedUsers.includes(userId);
   };
-
   return (
     <div className="suggested-friends-container">
       {suggestedFriends.slice(0, 3).map((friend) => (
         <div className="suggested-friends-friends-container" key={friend.id}>
           <div className="suggested-friends-friends-img">
             <img
-              src={friend.profileurl || NoProfile}
+              src={friend.profileurl ? friend.profileurl : NoProfile}
               alt="user-img"
               className="account-user-img"
             />

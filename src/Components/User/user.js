@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./user.css";
 import SettingsIcon from "./assets/settings.png";
 import SearchIcon from "./assets/search.png";
@@ -8,12 +8,35 @@ import NightMode from "./assets/night.png";
 import DayMode from "./assets/day.png";
 import SettingsIcon2 from "./assets/settings2.png";
 import Request from "./Request/request";
+import axios from "axios";
 import Requested from "./Requested/requested";
 
-function User({ isDarkMode, toggleDarkMode }) {
+const User = ({ userId, isDarkMode, toggleDarkMode }) => {
   const [showRequestedPopup, setShowRequestedPopup] = useState(false);
   const [showRequestsPopup, setShowRequestsPopup] = useState(false);
+  const [requestedUsers, setRequestedUsers] = useState([]);
   const count = 0;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // console.log(userId);
+      try {
+        const result = await axios.get(
+          `${process.env.REACT_APP_SERVER_PORT}/api/requested/${userId}`
+        );
+        const users = result.data;
+        if (users) {
+          setRequestedUsers(users);
+        } else {
+          setRequestedUsers([]);
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   const handleClick = () => {
     console.log("clicked");
   };
@@ -25,7 +48,7 @@ function User({ isDarkMode, toggleDarkMode }) {
   const handleRequestsClick = () => {
     setShowRequestsPopup(true);
   };
-
+  // console.log(userId);
   return (
     <div
       className={
@@ -87,18 +110,27 @@ function User({ isDarkMode, toggleDarkMode }) {
                 X
               </button>{" "}
             </div>
-            <div className="user-message-requests-messages scrollbar-style">
-              <Requested isDarkmode={isDarkMode} />
-              <Requested isDarkmode={isDarkMode} />
-              <Requested isDarkmode={isDarkMode} />
-              <Requested isDarkmode={isDarkMode} />
-              <Requested isDarkmode={isDarkMode} />
-              <Requested isDarkmode={isDarkMode} />
-              <Requested isDarkmode={isDarkMode} />
-              <Requested isDarkmode={isDarkMode} />
-              <Requested isDarkmode={isDarkMode} />
-              <Requested isDarkmode={isDarkMode} />
-              <Requested isDarkmode={isDarkMode} />
+            <div
+              className={
+                requestedUsers.length > 0
+                  ? "user-message-requests-messages scrollbar-style"
+                  : "user-message-requests-no-messages"
+              }
+            >
+              {requestedUsers.length > 0 ? (
+                <div>
+                  {requestedUsers.map((user) => (
+                    <Requested
+                      key={user} // Make sure each component has a unique key
+                      userId={user}
+                      currUser={userId}
+                      isDarkmode={isDarkMode}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div>No requests</div>
+              )}
             </div>
             {/* Add content for Requested popup */}
           </div>
@@ -120,7 +152,6 @@ function User({ isDarkMode, toggleDarkMode }) {
               </button>
             </div>
             <div className="user-message-requests-messages scrollbar-style">
-              {" "}
               <Request IsDarkmode={isDarkMode} />
               <Request IsDarkmode={isDarkMode} />
               <Request IsDarkmode={isDarkMode} />
@@ -191,6 +222,6 @@ function User({ isDarkMode, toggleDarkMode }) {
       </div>
     </div>
   );
-}
+};
 
 export default User;

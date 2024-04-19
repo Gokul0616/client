@@ -10,3 +10,8 @@
   background-color: #b7b6b6;
   border: none;
 }
+.user-message-requested-profile{
+  height: 60px;
+    width: 60px;
+    border-radius: 100px;
+}
