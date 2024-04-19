@@ -34,14 +34,14 @@ function Message({ userId, currUser, isDarkMode }) {
 
     // Check if userInput is not empty
     if (userInput.trim() !== "") {
-      console.log("User Input:", userInput); // Log user input
+      // console.log("User Input:", userInput); // Log user input
       const result = await axios.post(
         `${process.env.REACT_APP_SERVER_PORT}/api/message/${userId}/${currUser}`,
         {
           message: userInput,
         }
       );
-      console.log(result);
+      // console.log(result);
       setUserInput(""); // Clear input field
     } else {
       // Handle case where userInput is empty
