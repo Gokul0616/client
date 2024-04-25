@@ -12,6 +12,10 @@
   padding: 10px;
   border-bottom: 1px solid #e5e7eb;overflow-y: auto;
 }
+.user-message-my-message-message,
+.user-message-opponent-message-message {
+  word-wrap: break-word;
+max-width: 300px;}
 
 .user-message-messaging-input {
   height: 10%;

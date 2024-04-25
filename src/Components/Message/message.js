@@ -3,106 +3,146 @@ import "./message.css";
 import OptionsIcon from "./Assets/more.png";
 import OptionsIcon2 from "./Assets/more2.png";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 function Message({ userId, currUser, isDarkMode }) {
   const [messageUserDetails, setMessageUserDetails] = useState([]);
-  const [messageWarning, setMessageWarning] = useState("   Type a message...");
+  const [messageWarning, setMessageWarning] = useState("Type a message...");
+  const [userMessages, setUserMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
-  // console.log(userId, currUser);
   const [contextMenuPosition, setContextMenuPosition] = useState({
     x: 0,
     y: 0,
   });
   const [showContextMenu, setShowContextMenu] = useState(false);
-  const Name = "{Name}";
+  const [socket, setSocket] = useState(null);
   useEffect(() => {
-    // console.log("fetched");
+    // Fetch user details
     const fetchData = async () => {
-      const res = await axios.get(
-        `${process.env.REACT_APP_SERVER_PORT}/api/user/${currUser}`
-      );
-
-      setMessageUserDetails(res.data);
-      const res2 = await axios.get(
-        `${process.env.REACT_APP_SERVER_PORT}/api/usernewmessage/${userId}/${currUser}`
-      );
-      console.log(res2.data);
+      try {
+        const res = await axios.get(
+          `${process.env.REACT_APP_SERVER_PORT}/api/user/${currUser}`
+        );
+        setMessageUserDetails(res.data);
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
     };
-    fetchData();
+
+    fetchData(); // Fetch initial user details
+
+    // Polling for new messages every second
+    const intervalId = setInterval(() => {
+      fetchData();
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId); // Cleanup interval on component unmount
+    };
+  }, [currUser]);
+
+  useEffect(() => {
+    // Fetch user messages
+    const fetchMessages = async () => {
+      try {
+        const res = await axios.get(
+          `${process.env.REACT_APP_SERVER_PORT}/api/usernewmessage/${userId}/${currUser}`
+        );
+        setUserMessages(res.data);
+      } catch (error) {
+        console.error("Error fetching user messages:", error);
+      }
+    };
+
+    fetchMessages(); // Fetch initial user messages
+
+    // Polling for new messages every second
+    const intervalId = setInterval(() => {
+      fetchMessages();
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId); // Cleanup interval on component unmount
+    };
   }, [userId, currUser]);
 
   const handleChange = (event) => {
     setUserInput(event.target.value); // Update user input state
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent form submission
 
-    // Check if userInput is not empty
     if (userInput.trim() !== "") {
-      // console.log("User Input:", userInput); // Log user input
-      const result = await axios.post(
-        `${process.env.REACT_APP_SERVER_PORT}/api/message/${userId}/${currUser}`,
-        {
-          message: userInput,
-        }
-      );
-      console.log(result);
-      setUserInput(""); // Clear input field
-
-      // Request to fetch new messages after sending the message
       try {
-        const res2 = await axios.get(
-          `${process.env.REACT_APP_SERVER_PORT}/api/usernewmessage/${userId}/${currUser}`
+        const messageId = uuidv4();
+        const result = await axios.post(
+          `${process.env.REACT_APP_SERVER_PORT}/api/message/${userId}/${currUser}`,
+          { message: userInput, messageId: messageId }
         );
-        console.log(res2.data);
-        // Update messages state with new messages fetched from the backend
-        // Example: setMessages(res2.data.messages);
+
+        if (result.data === "success") {
+          const newMessage = {
+            message_id: messageId,
+            sender_id: userId,
+            receiver_id: currUser,
+            message_content: userInput,
+            timestamp: new Date().toLocaleString(),
+          };
+          setUserMessages([...userMessages, newMessage]);
+          setUserInput(""); // Clear the input field after sending the message
+          // Emit a new message event via WebSocket
+          // socket.emit("newMessage", newMessage);
+        } else {
+          console.error("Failed to send message:", result.data);
+        }
       } catch (error) {
-        console.error("Error fetching new messages:", error);
+        console.error("Error sending message:", error);
       }
     } else {
-      // Handle case where userInput is empty
       setMessageWarning("Please enter something to send a message.");
     }
   };
 
+  const getTimeString = (timestamp) => {
+    const [datePart, timePart] = timestamp.split(", ");
+    const [time, ampm] = timePart.split(" ");
+    const [hours, minutes] = time.split(":");
+    let formattedTime = `${hours}:${minutes}`;
+    if (ampm) {
+      formattedTime += ` ${ampm.toLowerCase()}`;
+    }
+    return formattedTime;
+  };
 
-  const data = [
-    { myMessage: "Hi, How are you? ", time: "9:47AM" },
-    { opponentMessage: "I am fine , How about you? ", time: "9:48AM" },
-    { myMessage: "I am fine ", time: "9:49AM" },
-    { myMessage: "How about your job? ", time: "9:50AM" },
-    { opponentMessage: "I am doing well ", time: "9:51AM" },
-    { opponentMessage: "How about yours? ", time: "9:52AM" },
-    { myMessage: "Yeah, fine? ", time: "9:53AM" },
-    { opponentMessage: "Shall we meet tonight dinner? ", time: "9:54AM" },
-    { myMessage: "Yes, Sure ", time: "9:55AM" },
-  ];
-
-  // Event handler for displaying the context menu
   const handleContextMenu = (event) => {
-    event.preventDefault(); // Prevent default right-click behavior
+    event.preventDefault();
     const posX = event.pageX;
     const posY = event.pageY;
     setContextMenuPosition({ x: posX, y: posY });
     setShowContextMenu(true);
   };
-  const handleClick = () => {
-    console.log("clicked");
-  };
 
-  // Event handler for hiding the context menu
   const hideContextMenu = () => {
     setShowContextMenu(false);
   };
+
+  const splitMessageContent = (content) => {
+    const chunkSize = 20;
+    const chunks = [];
+    for (let i = 0; i < content.length; i += chunkSize) {
+      chunks.push(content.slice(i, i + chunkSize));
+    }
+    return chunks.join("\n");
+  };
+  // console.log(userMessages);
 
   return (
     <div className="message-container">
       <div className="user-heading-container">
         <div className="user-heading-bio">
           <div className="user-heading-bio-name">
-            {messageUserDetails.firstname}
-            {messageUserDetails.lastname}
+            {messageUserDetails.firstname} {messageUserDetails.lastname}
           </div>
           <div className="user-heading-bio-text">{messageUserDetails.bio}</div>
         </div>
@@ -112,7 +152,6 @@ function Message({ userId, currUser, isDarkMode }) {
             src={isDarkMode ? OptionsIcon2 : OptionsIcon}
             alt="Settings"
             style={{ cursor: "pointer" }}
-            onClick={handleClick}
           />
         </div>
       </div>
@@ -121,35 +160,35 @@ function Message({ userId, currUser, isDarkMode }) {
         onContextMenu={(event) => event.preventDefault()}
       >
         <div className="user-message-messaging-message">
-          {/* Render messages dynamically */}
-          {data.map((item, index) => (
-            <React.Fragment key={index}>
-              {item.myMessage && (
-                <div className="user-message-opponent-message-container">
-                  <div
-                    className="user-message-opponent-message"
-                    onContextMenu={handleContextMenu}
-                  >
-                    <div className="user-message-opponent-message-message">
-                      {item.myMessage}
-                    </div>
-                    <div className="user-message-opponent-message-time">
-                      {item.time}
-                    </div>
-                  </div>
-                </div>
-              )}
-              {item.opponentMessage && (
+          {userMessages.map((message) => (
+            <React.Fragment key={message.message_id}>
+              {/* Assuming each message has a unique message_id */}
+              {message.sender_id === userId && (
                 <div className="user-message-my-message-container">
                   <div
                     className="user-message-my-message"
                     onContextMenu={handleContextMenu}
                   >
                     <div className="user-message-my-message-message">
-                      {item.opponentMessage}
+                      {splitMessageContent(message.message_content)}
                     </div>
                     <div className="user-message-my-message-time">
-                      {item.time}
+                      {getTimeString(message.timestamp)}
+                    </div>
+                  </div>
+                </div>
+              )}
+              {message.sender_id === currUser && (
+                <div className="user-message-opponent-message-container">
+                  <div
+                    className="user-message-opponent-message"
+                    onContextMenu={handleContextMenu}
+                  >
+                    <div className="user-message-opponent-message-message">
+                      {splitMessageContent(message.message_content)}
+                    </div>
+                    <div className="user-message-opponent-message-time">
+                      {getTimeString(message.timestamp)}
                     </div>
                   </div>
                 </div>
@@ -157,7 +196,7 @@ function Message({ userId, currUser, isDarkMode }) {
             </React.Fragment>
           ))}
         </div>
-        {/* Input field */}
+
         <div className="user-message-messaging-input">
           <form
             className="user-message-input-container"
@@ -167,8 +206,8 @@ function Message({ userId, currUser, isDarkMode }) {
               <input
                 className="user-message-input"
                 placeholder={messageWarning}
-                value={userInput} // Bind input value to state
-                onChange={handleChange} // Handle input change
+                value={userInput}
+                onChange={handleChange}
               />
               <button type="submit" className="user-message-send-button">
                 Send
@@ -177,7 +216,6 @@ function Message({ userId, currUser, isDarkMode }) {
           </form>
         </div>
       </div>
-      {/* Context menu */}
       {showContextMenu && (
         <div
           className="context-menu"
