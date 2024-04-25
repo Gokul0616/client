@@ -76,9 +76,19 @@ function Message({ userId, currUser, isDarkMode }) {
     if (userInput.trim() !== "") {
       try {
         const messageId = uuidv4();
+        const timestamp = new Date().toLocaleString("en-GB", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          millisecond: "2-digit",
+          hour12: true,
+        });
         const result = await axios.post(
           `${process.env.REACT_APP_SERVER_PORT}/api/message/${userId}/${currUser}`,
-          { message: userInput, messageId: messageId }
+          { message: userInput, messageId: messageId, timestamp: timestamp }
         );
 
         if (result.data === "success") {
@@ -87,7 +97,7 @@ function Message({ userId, currUser, isDarkMode }) {
             sender_id: userId,
             receiver_id: currUser,
             message_content: userInput,
-            timestamp: new Date().toLocaleString(),
+            timestamp: timestamp,
           };
           setUserMessages([...userMessages, newMessage]);
           setUserInput(""); // Clear the input field after sending the message
