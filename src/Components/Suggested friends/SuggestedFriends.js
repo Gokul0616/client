@@ -38,11 +38,11 @@ const SuggestedFriends = ({ isDarkMode, userId }) => {
         const checkReq = await axios.get(
           `${process.env.REACT_APP_SERVER_PORT}/api/checkRequest/${userId}`
         );
-        const receiverIds = checkReq.data.map((item) => item.receiver_id);
-        const uniqueReceiverIds = [...new Set(receiverIds)]; // Remove duplicates
-        setRequestedUsers(uniqueReceiverIds);
+        // const receiverIds = checkReq.data.map((item) => item.receiver_id);
+        // const uniqueReceiverIds = [...new Set(receiverIds)]; // Remove duplicates
+        setRequestedUsers(checkReq.data);
 
-        // console.log(receiverIds);
+        // console.log(checkReq.data);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -50,7 +50,7 @@ const SuggestedFriends = ({ isDarkMode, userId }) => {
 
     fetchData();
   }, [userId, showAll]);
-
+  // console.log(requestedUsers);
   // Function to shuffle array
   const shuffle = (array) => {
     const shuffledArray = [...array];
