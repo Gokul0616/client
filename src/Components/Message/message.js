@@ -59,7 +59,7 @@ function Message({ userId, currUser, isDarkMode }) {
     // Polling for new messages every second
     const intervalId = setInterval(() => {
       fetchMessages();
-    }, 1000);
+    }, 100);
 
     return () => {
       clearInterval(intervalId); // Cleanup interval on component unmount
