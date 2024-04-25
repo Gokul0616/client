@@ -21,8 +21,12 @@ function Message({ userId, currUser, isDarkMode }) {
       const res = await axios.get(
         `${process.env.REACT_APP_SERVER_PORT}/api/user/${currUser}`
       );
-      // console.log( res.data );
+
       setMessageUserDetails(res.data);
+      const res2 = await axios.get(
+        `${process.env.REACT_APP_SERVER_PORT}/api/usernewmessage/${userId}/${currUser}`
+      );
+      console.log(res2.data);
     };
     fetchData();
   }, [userId, currUser]);
@@ -42,13 +46,26 @@ function Message({ userId, currUser, isDarkMode }) {
           message: userInput,
         }
       );
-      // console.log(result);
+      console.log(result);
       setUserInput(""); // Clear input field
+
+      // Request to fetch new messages after sending the message
+      try {
+        const res2 = await axios.get(
+          `${process.env.REACT_APP_SERVER_PORT}/api/usernewmessage/${userId}/${currUser}`
+        );
+        console.log(res2.data);
+        // Update messages state with new messages fetched from the backend
+        // Example: setMessages(res2.data.messages);
+      } catch (error) {
+        console.error("Error fetching new messages:", error);
+      }
     } else {
       // Handle case where userInput is empty
-      setMessageWarning("   Please enter something to send a message....");
+      setMessageWarning("Please enter something to send a message.");
     }
   };
+
 
   const data = [
     { myMessage: "Hi, How are you? ", time: "9:47AM" },
