@@ -29,7 +29,6 @@ const Account = ({ userId, isDarkMode }) => {
     userid,
   } = userDetails;
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const userEmail = "gokulgokul10203@gmail.com";
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -168,7 +167,7 @@ const Account = ({ userId, isDarkMode }) => {
                 type="text"
                 placeholder={lastname ? lastname : "Last Name"}
               />
-              <input type="email" placeholder={userEmail} disabled />
+              <input type="email" placeholder={email} disabled />
               <select>
                 <option value="">{gender}</option>
                 <option value="Male">Male</option>
