@@ -14,6 +14,7 @@ const Account = ({ userId, isDarkMode }) => {
   const navigate = useNavigate();
   const [userFirstName, setUserFirstName] = useState("");
   const [userLastName, setUserLastName] = useState("");
+  const [loading, setLoading] = useState();
   const [userDetails, setUserDetails] = useState({});
   const {
     bio,
@@ -73,6 +74,7 @@ const Account = ({ userId, isDarkMode }) => {
     const bio = e.target[6].value;
 
     try {
+      setLoading(true);
       const formData = new FormData();
       formData.append("file", file);
       formData.append("firstName", firstName);
@@ -100,6 +102,7 @@ const Account = ({ userId, isDarkMode }) => {
       if (response.data) {
         closePopup();
         setFile("");
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -182,7 +185,10 @@ const Account = ({ userId, isDarkMode }) => {
                 accept="image/*"
                 onChange={handleImageUpload}
               />
-              <button type="submit">Save</button>
+              <button type="submit">
+                {" "}
+                {loading ? <span className="loading-dots"></span> : "Save"}
+              </button>
             </form>
           </div>
         </div>
