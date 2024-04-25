@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 
 function Message({ userId, currUser, isDarkMode }) {
   const [messageUserDetails, setMessageUserDetails] = useState([]);
-  const [messageWarning, setMessageWarning] = useState("Type a message...");
+  const [messageWarning, setMessageWarning] = useState("   Type a message...");
   const [userMessages, setUserMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
   const [contextMenuPosition, setContextMenuPosition] = useState({
@@ -100,7 +100,7 @@ function Message({ userId, currUser, isDarkMode }) {
         console.error("Error sending message:", error);
       }
     } else {
-      setMessageWarning("Please enter something to send a message.");
+      setMessageWarning("   Please enter something to send a message...");
     }
   };
 
