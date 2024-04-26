@@ -48,6 +48,7 @@ function Message({ userId, currUser, isDarkMode }) {
         const res = await axios.get(
           `${process.env.REACT_APP_SERVER_PORT}/api/usernewmessage/${userId}/${currUser}`
         );
+        console.log("fetched");
         setUserMessages(res.data);
       } catch (error) {
         console.error("Error fetching user messages:", error);
@@ -59,7 +60,7 @@ function Message({ userId, currUser, isDarkMode }) {
     // Polling for new messages every second
     const intervalId = setInterval(() => {
       fetchMessages();
-    }, 100);
+    }, 1000);
 
     return () => {
       clearInterval(intervalId); // Cleanup interval on component unmount
