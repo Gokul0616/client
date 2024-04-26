@@ -23,7 +23,7 @@ const Signin = () => {
     // console.log(userId, expirationTime);
     if (!userId || !expirationTime || Date.now() > expirationTime) {
       // If userId or expirationTime is not stored in local storage or expired, reset them
-      localStorage.setItem("userId", "");
+      localStorage.setItem("userToken", "");
       localStorage.setItem("expirationTime", "");
     }
     if (userId && expirationTime) {
