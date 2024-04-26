@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./signin.css";
 import Logo from "../../Landing page/assets/logo.png";
 import messageImg from "../assets/message-image.png";
@@ -17,7 +17,20 @@ const Signin = () => {
   });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    const expirationTime = localStorage.getItem("expirationTime");
+    // console.log(userId, expirationTime);
+    if (!userId || !expirationTime || Date.now() > expirationTime) {
+      // If userId or expirationTime is not stored in local storage or expired, reset them
+      localStorage.setItem("userId", "");
+      localStorage.setItem("expirationTime", "");
+    }
+    if (userId && expirationTime) {
+      // console.log( "hello" );
+      navigate(`/chat/${userId}`);
+    }
+  }, []);
   // Function to update form data
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,7 +39,11 @@ const Signin = () => {
       [name]: value,
     }));
   };
-
+  const setUserIdCookie = (userId) => {
+    const expirationTime = Date.now() + 7 * 24 * 60 * 60 * 1000; // 1 week in milliseconds
+    localStorage.setItem("userId", userId);
+    localStorage.setItem("expirationTime", expirationTime);
+  };
   // Function to toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -59,7 +76,7 @@ const Signin = () => {
     e.preventDefault();
     const isValid = validateForm();
     if (isValid) {
-      setLoading(true); // Set loading to true before making the API call
+      setLoading(true);
       try {
         const result = await axios.post(
           `${process.env.REACT_APP_SERVER_PORT}/api/signin`,
@@ -70,12 +87,13 @@ const Signin = () => {
         } else if (result.data.result === "Successful") {
           setSignupError("");
           const userId = result.data.userData.id;
+          setUserIdCookie(userId); // Set the userId cookie
           navigate(`/chat/${userId}`);
         }
       } catch (error) {
         console.error("Error sending data to backend:", error);
       } finally {
-        setLoading(false); // Set loading back to false after receiving the response
+        setLoading(false);
       }
     } else {
       console.log("Form is invalid. Please fix errors.");

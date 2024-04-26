@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./LandingPage.css";
 import Navbar from "./Navbar/Navbar";
 import LandingpageImg from "./assets/image1.png";
@@ -8,6 +8,14 @@ const LandingPage = () => {
   const handleClick = () => {
     navigate("/signup");
   };
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    const expirationTime = localStorage.getItem("expirationTime");
+
+    if (userId && expirationTime && Date.now() < expirationTime) {
+      navigate(`/chat/${userId}`);
+    }
+  }, [navigate]);
   return (
     <div className="landing-page-container">
       <Navbar />
