@@ -239,3 +239,43 @@
 .dark-mode .popup-content textarea {
   color: #fff;
 }
+/* Add this CSS to your existing styles */
+.user-settings {
+  position: relative;
+  display: inline-block;
+}
+
+.logout-tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  /* bottom: 100%; */
+  left: 50%;
+  margin-left: -100px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.user-settings:hover .logout-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Add these styles to make the tooltip arrow */
+.logout-tooltip::after {
+  content: "";
+  position: absolute;
+  /* top: 100%; */
+  /* left: 50%; */
+  bottom: 100%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #555 transparent; /* Change border-color to reverse the arrow direction */
+}

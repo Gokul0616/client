@@ -51,10 +51,7 @@ const Account = ({ userId, isDarkMode }) => {
   const openPopup = () => {
     setIsPopupOpen(true);
   };
-  const handleClick = () => {
-    console.log("cliclked");
-    // toast("Popup closed!");
-  };
+
   const closePopup = () => {
     setIsPopupOpen(false);
   };
@@ -107,7 +104,10 @@ const Account = ({ userId, isDarkMode }) => {
       console.error("Error uploading file:", error);
     }
   };
-
+  const handleClick = () => {
+    localStorage.clear();
+    navigate("/");
+  };
   return (
     <div className="account-container">
       <div className="user-heading-container">
@@ -120,6 +120,7 @@ const Account = ({ userId, isDarkMode }) => {
             style={{ cursor: "pointer" }}
             onClick={handleClick}
           />
+          <div className="logout-tooltip">Logout</div>
         </div>
       </div>
       <div className="accountinfo-container">
