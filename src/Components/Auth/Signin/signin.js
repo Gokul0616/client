@@ -18,7 +18,7 @@ const Signin = () => {
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem("userToken");
     const expirationTime = localStorage.getItem("expirationTime");
     // console.log(userId, expirationTime);
     if (!userId || !expirationTime || Date.now() > expirationTime) {
@@ -41,7 +41,7 @@ const Signin = () => {
   };
   const setUserIdCookie = (userId) => {
     const expirationTime = Date.now() + 7 * 24 * 60 * 60 * 1000; // 1 week in milliseconds
-    localStorage.setItem("userId", userId);
+    localStorage.setItem("userToken", userId);
     localStorage.setItem("expirationTime", expirationTime);
   };
   // Function to toggle password visibility

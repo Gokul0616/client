@@ -9,7 +9,7 @@ const LandingPage = () => {
     navigate("/signup");
   };
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem("userToken");
     const expirationTime = localStorage.getItem("expirationTime");
 
     if (userId && expirationTime && Date.now() < expirationTime) {
