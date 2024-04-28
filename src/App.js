@@ -5,7 +5,9 @@ import LandingPage from "./Components/Landing page/LandingPage";
 import Signin from "./Components/Auth/Signin/signin";
 import Signup from "./Components/Auth/Signup/signup";
 import Resetpassword from "./Components/Auth/Reset-password/resetpassword";
+import CheckMail from "./Components/Auth/Reset-password/mailCheck";
 import InvalidUrlPage from "./Components/InvalidUrlPage";
+import EnterMail from "./Components/Auth/Reset-password/entermail";
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -65,7 +67,9 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />{" "}
+            <Route path="/check-mail" element={<CheckMail />} />
             <Route path="/reset-password" element={<Resetpassword />} />
+            <Route path="/mail" element={<EnterMail />} />
             <Route path="/check/:id" element={<InvalidUrlPage />} />
             <Route path="*" element={<InvalidUrlPage />} />
           </Routes>

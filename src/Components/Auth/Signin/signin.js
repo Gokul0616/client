@@ -194,7 +194,7 @@ const Signin = () => {
             <div className="signin-form-footer">
               <div className="signin-form-footer-text">
                 Reset Password?
-                <Link className="link" to={"/reset-password"}>
+                <Link className="link" to={"/mail"}>
                   Reset
                 </Link>
               </div>{" "}

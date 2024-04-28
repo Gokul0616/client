@@ -1,19 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./resetpassword.css";
 import Logo from "../../Landing page/assets/logo.png";
 import Hide from "../assets/hide.png";
 import Show from "../assets/show.png";
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const Resetpassword = () => {
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
   });
-
+  const [loading, setLoading] = useState();
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [token, setToken] = useState();
+  useEffect(() => {
+    // Function to extract token from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+    // You can set the token in state if needed
+    setToken(token);
+    const fetchData = async () => {
+      // const token1 = token;
+      console.log(token);
+      try {
+        const response = await axios.post(
+          `${process.env.REACT_APP_SERVER_PORT}/auth/reset-password`,
+          {
+            token,
+          }
+        );
+        // console.log(response.data.error == "Invalid or expired token");
+        if (response.data.error == "Invalid or expired token") {
+          navigate("/*");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
+    fetchData();
+  }, []);
+  // console.log(token);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -53,12 +83,27 @@ const Resetpassword = () => {
     return isValid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid = validateForm();
     if (isValid) {
-      // Form submission logic
-      console.log("Form is valid. Submitting...");
+      try {
+        //  const token = "get token from state or URL"; // You need to get the token from state or URL
+        const newPassword = formData.password;
+        setLoading(true);
+        const response = await axios.post(
+          `${process.env.REACT_APP_SERVER_PORT}/auth/reset-password`,
+          { token, newPassword }
+        );
+        // console.log(response.data.message == "Password reset successfully");
+        if (response.data.message == "Password reset successfully") {
+          setLoading(false);
+          navigate("/signin");
+        }
+      } catch (error) {
+        console.error("Error resetting password:", error);
+        // Handle error
+      }
     } else {
       console.log("Form is invalid. Please fix errors.");
     }
@@ -91,6 +136,7 @@ const Resetpassword = () => {
               height={20}
               style={{ cursor: "pointer" }}
               src={showPassword ? Hide : Show}
+              alt="toggle-password"
             />
             {errors.password && (
               <div className="error-reset-password">{errors.password}</div>
@@ -114,6 +160,7 @@ const Resetpassword = () => {
               height={20}
               style={{ cursor: "pointer" }}
               src={showConfirmPassword ? Hide : Show}
+              alt="toggle-password"
             />
             {errors.confirmPassword && (
               <div className="error-reset-password">
@@ -123,7 +170,11 @@ const Resetpassword = () => {
           </div>
           <div className="reset-password-form-button-container">
             <button type="submit" className="reset-password-form-button">
-              Reset Password
+              {loading ? (
+                <span className="loading-dots"></span>
+              ) : (
+                "Reset Password"
+              )}
             </button>
           </div>
         </form>
