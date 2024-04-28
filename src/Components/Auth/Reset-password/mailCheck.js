@@ -6,7 +6,7 @@ const CheckMail = () => {
       <div className="check-mail-main-container">
         <div className="check-mail-heading">Check your mail</div>
         <div className="check-mail-heading">
-          We have send a link to your Mail
+          We have send a Reset link to your Mail
         </div>
       </div>
     </div>
