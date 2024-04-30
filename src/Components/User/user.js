@@ -10,6 +10,7 @@ import SettingsIcon2 from "./assets/settings2.png";
 import Request from "./Request/request";
 import axios from "axios";
 import Requested from "./Requested/requested";
+import SearchResults from "./search/SearchResults";
 
 const User = ({ userId, isDarkMode, toggleDarkMode }) => {
   const [showRequestedPopup, setShowRequestedPopup] = useState(false);
@@ -17,7 +18,9 @@ const User = ({ userId, isDarkMode, toggleDarkMode }) => {
   const [requestedUsers, setRequestedUsers] = useState([]);
   const [requestsUsers, setRequestsUsers] = useState([]);
   const [userNewMessage, setUserNewMessage] = useState([]);
-  const count = 0;
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,11 +52,32 @@ const User = ({ userId, isDarkMode, toggleDarkMode }) => {
     };
     fetchData();
   }, []);
-  // console.log(requestsUsers);
-  const handleClick = () => {
-    console.log("clicked");
+
+  const handleSearchChange = async (event) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+    if (query.trim() === "") {
+      setSearchResults([]);
+      return;
+    }
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_SERVER_PORT}/api/search?query=${query}`
+      );
+      // console.log(response.data);
+      setSearchResults(response.data);
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
   };
 
+  const handleSearchFocus = () => {
+    setIsSearchFocused(true);
+  };
+
+  const handleSearchBlur = () => {
+    setIsSearchFocused(false);
+  };
   const handleRequestedClick = () => {
     setShowRequestedPopup(true);
   };
@@ -110,7 +134,17 @@ const User = ({ userId, isDarkMode, toggleDarkMode }) => {
           type="text"
           placeholder="Search user with username"
           name="search"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          onFocus={handleSearchFocus}
+          onBlur={handleSearchBlur}
         />
+        {isSearchFocused && (
+          <SearchResults
+            searchResults={searchResults}
+            isDarkMode={isDarkMode}
+          />
+        )}
       </div>
       {/* Popup for Requested */}
       {showRequestedPopup && (

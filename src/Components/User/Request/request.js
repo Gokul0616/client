@@ -9,7 +9,7 @@ import axios from "axios";
 const Request = ({ count, userId, IsDarkmode, currUser }) => {
   const [remove, setRemove] = useState();
   const [userDetails, setUserDetails] = useState([]);
-  // console.log(userId);
+  console.log(userId);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,6 +18,7 @@ const Request = ({ count, userId, IsDarkmode, currUser }) => {
           `${process.env.REACT_APP_SERVER_PORT}/api/user/${userId}`
         );
         const users = result.data;
+        console.log(users);
         setUserDetails(users);
         // console.log(result);
       } catch (error) {
