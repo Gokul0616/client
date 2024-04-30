@@ -74,3 +74,6 @@
 .dark-mode .user-new-messages:hover {
   background-color: #2c2c2c;
 }
+.Disappear{
+  display:  none !important;
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./message.css";
 import OptionsIcon from "./Assets/more.png";
+import UserIcon from "./Assets/user.png";
 import OptionsIcon2 from "./Assets/more2.png";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
@@ -48,7 +49,7 @@ function Message({ userId, currUser, isDarkMode }) {
         const res = await axios.get(
           `${process.env.REACT_APP_SERVER_PORT}/api/usernewmessage/${userId}/${currUser}`
         );
-        console.log("fetched");
+        // console.log("fetched");
         setUserMessages(res.data);
       } catch (error) {
         console.error("Error fetching user messages:", error);
@@ -152,8 +153,23 @@ function Message({ userId, currUser, isDarkMode }) {
     <div className="message-container">
       <div className="user-heading-container">
         <div className="user-heading-bio">
-          <div className="user-heading-bio-name">
-            {messageUserDetails.firstname} {messageUserDetails.lastname}
+          <div className="user-heading-bio-name-container-image">
+            <div className="user-message-img-container-message-container">
+              <img
+                className="user-message-img "
+                src={
+                  messageUserDetails.profileurl
+                    ? messageUserDetails.profileurl
+                    : UserIcon
+                }
+                alt="Profile"
+                height={50}
+                width={50}
+              />
+            </div>
+            <div className="user-heading-bio-name">
+              {messageUserDetails.firstname} {messageUserDetails.lastname}
+            </div>
           </div>
           <div className="user-heading-bio-text">{messageUserDetails.bio}</div>
         </div>

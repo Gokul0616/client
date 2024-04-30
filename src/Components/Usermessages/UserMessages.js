@@ -5,9 +5,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const UserMessages = ({ userId, isDarkMode, currUser }) => {
-  const count = 1;
+  // const count = 1;
   const message = "messages new message founds inbox";
   const [userDetails, setUserDetails] = useState([]);
+  const [count, setUnreadCount] = useState([]);
+  const [disappear, setDisappear] = useState(true);
   const navigate = useNavigate();
   // Extract the first 32 characters, including spaces, and trim any excess
   const truncatedMessage = message.slice(0, 33).trim();
@@ -20,19 +22,44 @@ const UserMessages = ({ userId, isDarkMode, currUser }) => {
       );
       // console.log( userDetails.data );
       setUserDetails(userDetails.data);
-      // const result = await axios.get(
-      //   `${process.env.REACT_APP_SERVER_PORT}/api/usermessages/${userId}/${currUser}`
-      // );
-      // console.log(result);
     };
     fetchData();
   }, []);
   // console.log(userDetails);
-  const handleClick = () => {
+  useEffect(() => {
+    const fetchUnreadCount = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_SERVER_PORT}/api/usermessages/unread-count/${userId}/${currUser}`
+        );
+        setUnreadCount(response.data.unreadCount);
+        // console.log(response.data.unreadCount > 0);
+        if (count > 0) {
+          setDisappear(false);
+        }
+      } catch (error) {
+        console.error("Error fetching unread message count:", error);
+      }
+    };
+
+    fetchUnreadCount(); // Fetch unread count initially
+
+    // Fetch unread count periodically
+    const intervalId = setInterval(fetchUnreadCount, 10000);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
+  }, [userId, currUser]);
+
+  // console.log(count);
+  const handleClick = async () => {
     // navigate(`/chat/${userId}/?=${currUser}`);
     const currentUserId = currUser;
     const messageUserId = userId;
     navigate(`/chat/${currentUserId}/${messageUserId}`);
+    const result = await axios.get(
+      `${process.env.REACT_APP_SERVER_PORT}/api/usermessages/read/${userId}/${currUser}`
+    );
   };
 
   return (
@@ -61,7 +88,15 @@ const UserMessages = ({ userId, isDarkMode, currUser }) => {
           {truncatedMessage}
         </div>
       </div>
-      <div className="user-message-newmessage-count">{count}</div>
+      <div
+        className={
+          disappear
+            ? "user-message-newmessage-count Disappear"
+            : "user-message-newmessage-count"
+        }
+      >
+        {count}
+      </div>
     </div>
   );
 };

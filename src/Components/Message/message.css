@@ -238,3 +238,11 @@ max-width: 300px;}
 .dark-mode .user-heading-bio-text{
   color: #908d8d;
 }
+.user-heading-bio-name-container-image{
+  display: flex;
+}
+.user-heading-bio-name{
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
