@@ -8,11 +8,15 @@ const UserMessages = ({ userId, isDarkMode, currUser }) => {
   // const count = 1;
   const message = "messages new message founds inbox";
   const [userDetails, setUserDetails] = useState([]);
-  const [count, setUnreadCount] = useState([]);
+  const [count, setUnreadCount] = useState();
+  const [lastmessage, setLastMessage] = useState();
   const [disappear, setDisappear] = useState(true);
   const navigate = useNavigate();
+
   // Extract the first 32 characters, including spaces, and trim any excess
-  const truncatedMessage = message.slice(0, 33).trim();
+  const truncatedMessage = lastmessage
+    ? lastmessage
+    : message.slice(0, 33).trim();
   // console.log(truncatedMessage);
 
   useEffect(() => {
@@ -33,7 +37,7 @@ const UserMessages = ({ userId, isDarkMode, currUser }) => {
           `${process.env.REACT_APP_SERVER_PORT}/api/usermessages/unread-count/${userId}/${currUser}`
         );
         setUnreadCount(response.data.unreadCount);
-        // console.log(response.data.unreadCount > 0);
+        setLastMessage(response.data.lastmessage);
         if (count > 0) {
           setDisappear(false);
         }
@@ -51,7 +55,7 @@ const UserMessages = ({ userId, isDarkMode, currUser }) => {
     return () => clearInterval(intervalId);
   }, [userId, currUser]);
 
-  // console.log(count);
+  
   const handleClick = async () => {
     // navigate(`/chat/${userId}/?=${currUser}`);
     const currentUserId = currUser;

@@ -173,14 +173,14 @@ function Message({ userId, currUser, isDarkMode }) {
           </div>
           <div className="user-heading-bio-text">{messageUserDetails.bio}</div>
         </div>
-        <div className="user-settings">
+        {/* <div className="user-settings">
           <img
             className="settings-icon"
             src={isDarkMode ? OptionsIcon2 : OptionsIcon}
             alt="Settings"
             style={{ cursor: "pointer" }}
           />
-        </div>
+        </div> */}
       </div>
       <div
         className="user-message-messaging-container"

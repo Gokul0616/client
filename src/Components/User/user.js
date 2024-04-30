@@ -71,13 +71,13 @@ const User = ({ userId, isDarkMode, toggleDarkMode }) => {
       <div className="user-heading-container">
         <div className="user-heading">Users</div>
         <div className="user-settings">
-          <img
+          {/* <img
             className="settings-icon"
             src={isDarkMode ? SettingsIcon2 : SettingsIcon}
             alt="Settings"
             style={{ cursor: "pointer" }}
             onClick={handleClick}
-          />
+          /> */}
           <img
             className="mode-switch"
             onClick={toggleDarkMode}
@@ -106,7 +106,11 @@ const User = ({ userId, isDarkMode, toggleDarkMode }) => {
         <div className="search-icon">
           <img src={isDarkMode ? SearchIcon2 : SearchIcon} alt="Search" />
         </div>
-        <input type="text" placeholder="Search user with username" />
+        <input
+          type="text"
+          placeholder="Search user with username"
+          name="search"
+        />
       </div>
       {/* Popup for Requested */}
       {showRequestedPopup && (
