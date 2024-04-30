@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./resetpassword.css";
+import { useNavigate } from "react-router-dom";
+
 const CheckMail = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigate("/signin");
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [navigate]);
   return (
     <div className="check-mail-container">
       <div className="check-mail-main-container">

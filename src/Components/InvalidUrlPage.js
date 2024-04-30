@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 
 const InvalidUrlPage = () => {
   const id = useParams().id;
-  console.log(id);
+  // console.log(id);
   return (
     <div>
       <h2>Invalid URL</h2>

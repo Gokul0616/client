@@ -24,16 +24,17 @@ const Resetpassword = () => {
     setToken(token);
     const fetchData = async () => {
       // const token1 = token;
-      console.log(token);
+      // console.log(token);
       try {
         const response = await axios.post(
-          `${process.env.REACT_APP_SERVER_PORT}/auth/reset-password`,
+          `${process.env.REACT_APP_SERVER_PORT}/auth/check-reset-password`,
           {
             token,
           }
         );
+        // console.log(response.data);
         // console.log(response.data.error == "Invalid or expired token");
-        if (response.data.error == "Invalid or expired token") {
+        if (response.data == "failure") {
           navigate("/*");
         }
       } catch (error) {
