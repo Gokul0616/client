@@ -241,8 +241,14 @@ max-width: 300px;}
 .user-heading-bio-name-container-image{
   display: flex;
 }
+.user-heading-bio-text,
 .user-heading-bio-name{
   display: flex;
   align-items: center;
   margin-left: 10px;
+}
+.user-heading-bio-name-container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }

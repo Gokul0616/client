@@ -167,11 +167,15 @@ function Message({ userId, currUser, isDarkMode }) {
                 width={50}
               />
             </div>
-            <div className="user-heading-bio-name">
-              {messageUserDetails.firstname} {messageUserDetails.lastname}
+            <div className="user-heading-bio-name-container">
+              <div className="user-heading-bio-name">
+                {messageUserDetails.firstname} {messageUserDetails.lastname}
+              </div>
+              <div className="user-heading-bio-text">
+                {messageUserDetails.bio}
+              </div>
             </div>
           </div>
-          <div className="user-heading-bio-text">{messageUserDetails.bio}</div>
         </div>
         {/* <div className="user-settings">
           <img
